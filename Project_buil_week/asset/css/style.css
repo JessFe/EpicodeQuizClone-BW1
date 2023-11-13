@@ -1,0 +1,23 @@
+body {
+    background-color: rgba(0, 0, 0, 0.395);
+}
+
+#top {
+    display: flex;
+    align-items: center;
+}
+
+#logo {
+    text-align: left;
+    max-width: 300px;
+    max-height: auto;
+}
+
+.options {
+    display: flex;
+    gap: 10px;
+}
+
+.selected {
+    background-color: #af0087;
+}
