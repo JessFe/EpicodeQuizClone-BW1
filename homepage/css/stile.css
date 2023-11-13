@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Outfit:wght@400;700&display=swap');
+
+body {background-image: url(../asset/img/bg.jpg);
+      background-size: cover;
+      margin: 40px 90px 40px 90px;}
+
+span {font-family: 'Inter', sans-serif;
+      font-weight: bold;
+      color: white;}
+
+.cursore {cursor: pointer;}
+
+/*------ header ------*/
+
+#logo {width: 11%;
+       margin-bottom: 80px;}
+       
+.titoli {font-family: 'Outfit', sans-serif;
+         font-size: 60px;
+         color: white;
+         line-height: 50px;}
+
+#spanTitoli {font-family: 'Outfit', sans-serif;
+             font-weight: bold;
+             color: white;}
+
+/*----- main -----*/
+
+.descrizioni {font-family: 'Inter', sans-serif;
+              font-size: 16px;
+              color: white;
+              line-height: 20px;}
+              
+h2 {color: #D20094;
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 10px;}
+
+#lista {margin-left: 20px;
+        margin-top: 50px;
+        line-height: 25px;
+        list-style-type: disc;}
+
+/*---- footer ----*/
+
+footer {margin-top: 100px;}
+
+#checkbox {width: 20px;
+           height: 20px;
+           margin-right: 10px;}
+
+#footerSpan {font-size: 14px;}
+
+#destra {text-align: right;}
+
+#proceed {font-family: 'Outfit', sans-serif;
+          font-weight: bold;
+          font-size: 20px;
+          width: 200px;
+          height: 60px;
+          border-radius: 0%;
+          background-color: #00FFFF;
+          border: 0;
+          box-shadow: 0 0 25px rgba(0, 255, 255);}
+
