@@ -98,11 +98,25 @@ const questions = [
       incorrect_answers: ["Python", "C", "Jakarta"],
     },
   ];
+// punteggio
+var score = 0;
+//domanda attuale
+let questionNumber = 0;
+//risposte sbagliate
+let wrong_answers = [];
 
-  var score = 0;
 
-  let questionNumber = 0;
+function displayQuestion() {
+    const questionData = questions[questionNumber];
+    // stampo le domande
+    const questionElement = document.createElement('div');
+    questionElement.className = 'question';
+    questionElement.innerHTML = questionData.question;
+    //stampo le opzioni
+    const optionsElement = document.createElement('div');
+    optionsElement.className = 'options';
+    
+}
 
-  let correct_answers = []
-  let wrong_answers = []
+
 
