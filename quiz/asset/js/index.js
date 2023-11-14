@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const questionEl = document.getElementById("question");
     const answerListEl = document.getElementById("answer-list");
     const timerEl = document.getElementById("timer");
-    const nextButtonEl = document.getElementById("next-button");
+    // const nextButtonEl = document.getElementById("next-button");
     // Funzione per avviare il timer
 
     // Imposta il dashoffset iniziale a pieno, per poi diminuirlo
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             for (let j = i; j < i + 2 && j < allAnswers.length; j++) {
                 const answer = allAnswers[j];
                 const inputR = document.createElement('input');
-
+            
                 inputR.type = 'radio';
                 inputR.id = 'answer_' + j;
                 inputR.name = 'answer';
@@ -169,14 +169,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 label.htmlFor = inputR.id;
                 label.textContent = answer;
                 label.className = 'radio';
+            
+                inputR.addEventListener('change', () => {
+                    selectAnswer(answer);
+                    setTimeout(() => {
+                        goToNextQuestion();
+                    }, 1000); // Ritardo di un secondo (1000 millisecondi)
+                });
+            
                 answerGroup.appendChild(inputR);
                 answerGroup.appendChild(label);
-                label.addEventListener('click', () => selectAnswer(answer));
-            };
+            }
+            
             answerListEl.appendChild(answerGroup);
+            clearInterval(timer);
+            startTimer();
         }
-        clearInterval(timer);
-        startTimer();
     }
     // Funzione per gestire la selezione delle risposte
     function selectAnswer(answer) {
@@ -206,7 +214,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const finalScore = score / questions.length >= 0.6 ? 'Quiz Superato!' : 'Quiz Fallito.';
         result.innerText = `Punteggio: ${score}/${questions.length} - ${finalScore}`;
     }
-    nextButtonEl.addEventListener('click', goToNextQuestion);
+    // nextButtonEl.addEventListener('click', goToNextQuestion);
     // Inizia il quiz
     renderQuestion();
 });
