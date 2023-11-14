@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Benchmark page di EPICODE">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="asset/css/style.css">
+    <title>Benchmark page</title>
+</head>
+
+<body>
+    <div id="container">
+        <div id="top">
+            <img src="asset/img/epicode_logo.png" alt="epicode_logo" id="logo">
+            <div id="timer-container">
+                <svg id="timer-svg" width="100" height="100">
+                    <circle id="timer-circle" r="45" cx="50" cy="50" fill="transparent" stroke="#0FF" stroke-width="10"
+                        stroke-dasharray="282.743" stroke-dashoffset="0" transform="rotate(-90 50 50)">
+                    </circle>
+                </svg>
+                <span id="timer-text"></span>
+            </div>
+
+        </div>
+        <div id="quiz-container">
+            <div id="question"></div>
+            <div id="answer-list"></div>
+        </div>
+        <div id="results-screen" style="display: none;">
+            <div id="details-container"></div>
+        </div>
+        <script src="asset/js/index.js"></script>
+</body>
+
+</html>
