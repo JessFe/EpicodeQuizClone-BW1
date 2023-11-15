@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 <div class="result correct">
                     <h3 class='correctH'>Correct</h3>
                     <p class='correctP'>${percentCorrect.toFixed(1)}%</p>
-                    <p class='correctP'>${score}/${totalQuestions} questions</p>
+                    <p class='correctP2'>${score}/${totalQuestions} questions</p>
                 </div>
                 <svg width="300" height="300" viewBox="0 0 200 200">
                     <circle r="90" cx="100" cy="100" fill="transparent" stroke="#d20094" stroke-width="20"
@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 <div class="result wrong">
                     <h3 class='incorrectH'>Wrong</h3>
                     <p class='incorrectP'>${percentIncorrect.toFixed(1)}%</p>
-                    <p class='incorrectP'>${totalQuestions - score}/${totalQuestions} questions</p>
+                    <p class='incorrectP2'>${totalQuestions - score}/${totalQuestions} questions</p>
                 </div>
             </div>
             <form action="./rating.html">
@@ -321,14 +321,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     // Funzione per riavviare il quiz (da implementare)
-    function restartQuiz() {
-        // Reimposta lo stato del quiz e mostra il contenitore del quiz
-        questionNumber = 0;
-        score = 0;
-        document.getElementById('quiz-container').style.display = 'block';
-        resultsScreen.style.display = 'none';
-        // renderQuestion();
-    }
+    // function restartQuiz() {
+    //     // Reimposta lo stato del quiz e mostra il contenitore del quiz
+    //     questionNumber = 0;
+    //     score = 0;
+    //     document.getElementById('quiz-container').style.display = 'block';
+    //     resultsScreen.style.display = 'none';
+    //     // renderQuestion();
+    // }
     // Inizia il quiz
     renderQuestion();
 });
