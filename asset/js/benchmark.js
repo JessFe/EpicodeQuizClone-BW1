@@ -202,10 +202,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 nextButton.style.display = "none";
 
                 inputR.addEventListener("click", () => {
+                    selectAnswer(answer);
                     nextButton.style.display = "inline";
                 })
                 nextButton.addEventListener("click", () => {
-                    selectAnswer(answer);
                     goToNextQuestion()
                 })
                 answerGroup.appendChild(inputR);
