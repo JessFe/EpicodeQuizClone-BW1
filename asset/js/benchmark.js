@@ -98,8 +98,27 @@ const questions = [
         incorrect_answers: ["Python", "C", "Jakarta"],
     },
 ];
+
+function createTimerSVG() {
+    const timerContainer = document.getElementById("timer-container");
+    if (timerContainer) {
+        timerContainer.innerHTML = `
+            <svg id="timer-svg" width="100" height="100">
+                <circle id="timer-circle" r="45" cx="50" cy="50" fill="transparent"
+                        stroke="#0FF" stroke-width="10"
+                        stroke-dasharray="282.743" stroke-dashoffset="0"
+                        transform="rotate(-90 50 50)">
+                </circle>
+                <text id="timer-text" x="50%" y="50%" alignment-baseline="middle"
+                    text-anchor="middle" font-size="20" fill="#fff">60</text>
+            </svg>
+        `;
+    }
+}
+
 // aspetto il caricamento del DOM per far partire lo script 
 document.addEventListener('DOMContentLoaded', (event) => {
+    createTimerSVG();
     let questionNumber = 0;
     let score = 0;
     let timer;
@@ -155,8 +174,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }, 1000);
     }
 
-
-
     // Funzione per mostrare la domanda
     function renderQuestion() {
 
@@ -210,8 +227,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     nextButton.style.display = "inline";
                 })
                 nextButton.addEventListener("click", () => {
-                    
-                
+
+
                     goToNextQuestion()
                 })
                 answerGroup.appendChild(inputR);
@@ -230,25 +247,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Funzione per gestire la selezione delle risposte
 
-    
-    
+
+
 
     function selectAnswer(answer) {
         console.log("selectAnswer:", answer);
         console.log("correctanswer:", questions[questionNumber].correct_answer);
-    
+
         if (!questionAnswered) {
             questionAnswered = true;
-    
+
             if (answer === questions[questionNumber].correct_answer) {
                 score++;
                 console.log("score:", score);
             }
-    
+
             highlightSelectedAnswer(answer);
         }
     }
-    
+
     // Funzione per evidenziare la risposta selezionata
     function highlightSelectedAnswer(selectedAnswer) {
         const answerListItems = document.querySelectorAll('#answer-list label');
@@ -307,8 +324,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         <tspan class="winP" x="50%" dy="1.2em">You passed the exam.</tspan>
                         <tspan class="secondP" x="50%" dy="1.2em">We'll send you the certificate</tspan>
                         <tspan class="secondP" x="50%" dy="1.2em">in a few minutes.</tspan>
-                        <tspan class="thirdP" x="50%" dy="1.2em">Check your email (including promotions /</tspan>
-                        <tspan class="thirdP" x="50%" dy="1.2em"> spam folder)</tspan> ` :
+                        <tspan class="thirdP" x="50%" dy="1.2em">Check your email (including promotions /</tspan>
+                        <tspan class="thirdP" x="50%" dy="1.2em"> spam folder)</tspan> ` :
                 `<tspan class="loseH" x="50%" dy="-1.5em">Oh no!</tspan>
                         <tspan class="loseP" x="50%" dy="1.5em">You didn't pass the exam.</tspan>
                         <tspan class="secondP" x="50%" dy="1.5em">Try again, champion!</tspan>`
