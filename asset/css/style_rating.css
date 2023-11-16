@@ -16,6 +16,7 @@ body {
     color: white;
     font-family: 'Outfit', sans-serif;
     text-align: center;
+    overflow: hidden;
 }
 
 /*------ header ------*/
