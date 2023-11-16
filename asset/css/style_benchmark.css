@@ -157,9 +157,9 @@ input[type="radio"]:checked+label {
     height: 60px;
     border-radius: 0%;
     background-color: transparent;
-    box-shadow: 0 0 5px rgba(0, 255, 255);
+    box-shadow: 0 0 5px #00ffff;
     margin-top: 3em;
-    border: none;
+    border: 2px solid white;
 }
 
 .cursore:hover {
