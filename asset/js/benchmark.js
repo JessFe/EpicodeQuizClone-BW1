@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const timerCircleEl = document.getElementById('timer-circle');
         const circumference = 2 * Math.PI * 45;
         timerCircleEl.style.strokeDasharray = circumference;
-        timerCircleEl.style.strokeDashoffset = circumference; // Inizia con il cerchio pieno
+        timerCircleEl.style.strokeDashoffset = 0; // Inizia con il cerchio pieno
 
         // Aggiungi il testo "SECONDS" sopra al contatore
         const secondsTextEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -159,6 +159,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Funzione per mostrare la domanda
     function renderQuestion() {
+
+        questionAnswered = false;
+
         if (questionNumber >= questions.length) {
             endQuiz();
             return;
@@ -202,10 +205,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 nextButton.style.display = "none";
 
                 inputR.addEventListener("click", () => {
+
                     selectAnswer(answer);
                     nextButton.style.display = "inline";
                 })
                 nextButton.addEventListener("click", () => {
+                    
+                
                     goToNextQuestion()
                 })
                 answerGroup.appendChild(inputR);
@@ -223,12 +229,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     // Funzione per gestire la selezione delle risposte
+
+    
+    
+
     function selectAnswer(answer) {
-        if (answer === questions[questionNumber].correct_answer) {
-            score++;
+        console.log("selectAnswer:", answer);
+        console.log("correctanswer:", questions[questionNumber].correct_answer);
+    
+        if (!questionAnswered) {
+            questionAnswered = true;
+    
+            if (answer === questions[questionNumber].correct_answer) {
+                score++;
+                console.log("score:", score);
+            }
+    
+            highlightSelectedAnswer(answer);
         }
-        highlightSelectedAnswer(answer);
     }
+    
     // Funzione per evidenziare la risposta selezionata
     function highlightSelectedAnswer(selectedAnswer) {
         const answerListItems = document.querySelectorAll('#answer-list label');
@@ -287,8 +307,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         <tspan class="winP" x="50%" dy="1.2em">You passed the exam.</tspan>
                         <tspan class="secondP" x="50%" dy="1.2em">We'll send you the certificate</tspan>
                         <tspan class="secondP" x="50%" dy="1.2em">in a few minutes.</tspan>
-                        <tspan class="thirdP" x="50%" dy="1.2em">Check your email (including promotions /</tspan>
-                        <tspan class="thirdP" x="50%" dy="1.2em"> spam folder)</tspan> ` :
+                        <tspan class="thirdP" x="50%" dy="1.2em">Check your email (including promotions /</tspan>
+                        <tspan class="thirdP" x="50%" dy="1.2em"> spam folder)</tspan> ` :
                 `<tspan class="loseH" x="50%" dy="-1.5em">Oh no!</tspan>
                         <tspan class="loseP" x="50%" dy="1.5em">You didn't pass the exam.</tspan>
                         <tspan class="secondP" x="50%" dy="1.5em">Try again, champion!</tspan>`
