@@ -318,17 +318,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <circle id="incorrect-circle" r="90" cx="100" cy="100" fill="transparent" stroke="#00ffff" stroke-width="20"
                         stroke-dasharray="${circumference}" stroke-dashoffset="${circumference - correctOffset}"
                         transform="rotate(-90 100 100)" />
-                    <text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" font-size="16px" fill="#fff">
+                    <text x="50%" y="45%" alignment-baseline="middle" text-anchor="middle" font-size="16px" fill="#fff">
                         ${percentCorrect >= passingScore ?
                 `<tspan class="winH" x="50%" dy="-1.2em">Congratulations!</tspan>
                         <tspan class="winP" x="50%" dy="1.2em">You passed the exam.</tspan>
-                        <tspan class="secondP" x="50%" dy="1.2em">We'll send you the certificate</tspan>
+                        <tspan class="secondP" x="50%" dy="1.7em">We'll send you the certificate</tspan>
                         <tspan class="secondP" x="50%" dy="1.2em">in a few minutes.</tspan>
                         <tspan class="thirdP" x="50%" dy="1.2em">Check your email (including promotions /</tspan>
                         <tspan class="thirdP" x="50%" dy="1.2em"> spam folder)</tspan> ` :
-                `<tspan class="loseH" x="50%" dy="-1.5em">Oh no!</tspan>
+                `<tspan class="loseH" x="50%" dy="-0.6em">Oh no!</tspan>
                         <tspan class="loseP" x="50%" dy="1.5em">You didn't pass the exam.</tspan>
-                        <tspan class="secondP" x="50%" dy="1.5em">Try again, champion!</tspan>`
+                        <tspan class="secondP" x="50%" dy="1.8em">Try again, champion!</tspan>`
             }
                     </text>
                 </svg>
