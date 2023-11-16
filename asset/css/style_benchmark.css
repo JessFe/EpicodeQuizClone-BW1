@@ -95,6 +95,7 @@ input[type="radio"]:checked+label {
 
 .nextButton:hover {
     background-color: #B5018B;
+    transition: 400ms;
 }
 
 .countAnswers {
@@ -164,7 +165,7 @@ input[type="radio"]:checked+label {
     background-color: #33FFFF;
     box-shadow: 0 0 35px #00FFFF;
     color: black;
-    transition: 1200ms;
+    transition: 400ms;
 }
 
 .winP,

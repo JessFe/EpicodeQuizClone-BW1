@@ -111,5 +111,5 @@ button {
 
 button:hover {
       box-shadow: 0 0 35px #00FFFF;
-      transition: 500ms;
+      transition: 400ms;
 }
