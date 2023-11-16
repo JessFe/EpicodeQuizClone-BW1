@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Outfit:wght@400;700&display=swap');
+
+body {
+      height: 100vh;
+      background-color: #0c113b;
+      background-image:
+          linear-gradient(125deg,
+          #0c113b 45%,
+          #431D5Bbb 50%, #431D5Bee 52%, #4a1a62ee 56%,
+          #692a7aee 60%, #572272 65%, #471a62 69%, #471D5B 70%,
+          #692a7aee 75%, #572272 78%, #471a62 83%, #431D5B 84%,
+          #0c113b 92%);        
+  
+      width: 700px;
+      margin: 2rem auto;
+      color: white;
+      font-family: 'Inter', sans-serif;
+}
+
+/*------ header ------*/
+
+header img {
+      width: 8rem;
+}
+
+/*------ main ------*/
+
+main {
+      margin: 5.5rem 0;
+}
+
+h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 4rem;
+      line-height: 3rem;
+}
+
+h2 {
+      color: #D20094;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 40px;
+      margin-bottom: 10px;
+}
+
+span, button {
+      font-weight: bold;
+}
+
+p, ul {
+      font-size: 0.9rem;
+      color: white;
+      line-height: 1rem;
+}
+
+ul {
+      margin-left: 1.2rem;
+      margin-top: 2rem;
+      line-height: 1.4rem;
+      list-style-type: disc;
+}
+
+/*---- footer ----*/
+
+form {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+}
+
+label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+}
+
+.checkbox-container {
+      display: flex;
+      align-items: center;
+}
+
+#checkbox {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 10px;
+      background: transparent;
+      border: 2.2px solid white;
+      appearance: none;
+}
+
+#checkbox:checked::before {
+      color: #0FF;
+      content: '\2713';
+      position: relative;
+      bottom: 25%;
+      left: 17%;
+}
+
+.cursore {
+      cursor: pointer;
+}
+
+button {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      padding: 0.8rem 2.8rem;
+      background-color: #00FFFF;
+      border: 0;
+      box-shadow: 0 0 25px rgb(0, 255, 255);
+}
+
+button:hover {
+      box-shadow: 0 0 35px #00FFFF;
+      transition: 500ms;
+}

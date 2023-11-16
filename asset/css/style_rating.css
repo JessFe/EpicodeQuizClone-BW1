@@ -1,50 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Outfit:wght@400;700&display=swap');
 
 body {
-    background-image: url(../img/bg.jpg);
-    background-attachment: fixed;
-    background-size: 100% 100%;
-    margin: 40px 90px 40px 90px;
+    height: 100vh;
+    background-color: #0c113b;
+    background-image:
+        linear-gradient(125deg,
+        #0c113b 45%,
+        #431D5Bbb 50%, #431D5Bee 52%, #4a1a62ee 56%,
+        #692a7aee 60%, #572272 65%, #471a62 69%, #471D5B 70%,
+        #692a7aee 75%, #572272 78%, #471a62 83%, #431D5B 84%,
+        #0c113b 92%);        
+
+        width: 700px;
+    margin: 2rem auto;
     color: white;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     text-align: center;
-}
-
-
-
-.cursore {
-    cursor: pointer;
 }
 
 /*------ header ------*/
 
-#logo-container {
-    text-align: left;
-    margin-bottom: 80px;
-}
-
-#logo {
-    width: 11%;
-}
-
-h1 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 60px;
-    font-weight: bold;
-    color: white;
-    line-height: 50px;
+header img {
+    width: 8rem;
+    display: block;
 }
 
 /*----- main -----*/
 
 main {
-    width: 80%;
-    margin: auto;
+    margin: 5.5rem 0 2rem;
+}
+
+h1 {
+    font-size: 2.6rem;
+    font-weight: bold;
+    line-height: 3rem;
 }
 
 p {
-    margin: 2rem 0;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    margin: 0.7rem 0;
 }
 
 /*----- rating -----*/
@@ -54,43 +50,37 @@ p {
 }
 
 .star {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     cursor: pointer;
-    margin: 0 0.5rem;
+    margin: 0.5rem 0.4rem 3rem;
 }
 
 input[type="text"] {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid #D20094;
-    width: 30rem;
+    width: 570px;
     color: gray;
+    font-size: 0.9rem;
     text-align: left;
     outline: none;
-    padding: 5px 25px;
+    padding: 8px 30px;
+    margin: 1rem 0;
 }
 
 /*---- footer ----*/
 
-footer {
-    margin-top: 3rem;
-}
-
-
-#proceed {
-    font-family: 'Outfit', sans-serif;
+button {
     font-weight: bold;
-    font-size: 20px;
-    width: 200px;
-    height: 60px;
-    border-radius: 0%;
+    font-size: 1.1rem;
+    padding: 0.8rem 2.8rem;
     background-color: #00FFFF;
     border: 0;
-    box-shadow: 0 0 25px rgba(0, 255, 255);
+    box-shadow: 0 0 25px rgb(0, 255, 255);
 }
 
-#proceed:hover {
-    background-color: #33FFFF;
+button:hover {
     box-shadow: 0 0 35px #00FFFF;
+    transition: 500ms;
 }

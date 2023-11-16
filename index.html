@@ -1,27 +1,26 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Welcome page di EPICODE">
-    <link rel="stylesheet" href="./asset/css/reset_home.css">
-    <link rel="stylesheet" href="./asset/css/style_home.css">
+    <link rel="stylesheet" href="./asset/css/reset.css">
+    <link rel="stylesheet" href="./asset/css/style_index.css">
     <title>Welcome Page</title>
 </head>
 
 <body>
     <header>
-        <img id="logo" src="./asset/img/epicode_logo.png">
-
+        <img src="./asset/img/epicode_logo.png" alt="Epicode logo">
     </header>
     <main>
-        <h1 class="titoli">Welcome to <br><span id="spanTitoli">your exam</span></h1>
+        <h1>Welcome to <br><span>your exam</span></h1>
         <h2>Instructions</h2>
-        <p class="descrizioni">We don't expect most engineers to know the answers to all of these<br>
+        <p>We don't expect most engineers to know the answers to all of these<br>
             questions, so don't warry if you're unsure of a few of them.</p>
         <div>
-            <ul id="lista" class="descrizioni">
+            <ul>
                 <li>Each question is <span>timed</span> and can only be <span>answered once</span>.</li>
                 <li>Changing browser tab or opening other windows will <span>invalidate the question</span>.</li>
                 <li>This exam will take approx. <span>0-5 minutes</span>.</li>
@@ -29,15 +28,15 @@
         </div>
     </main>
     <footer>
-        <form action="./Benchmark.html">
+        <form action="./benchmark.html">
             <div class="checkbox-container">
                 <input class="cursore" id="checkbox" type="checkbox" required>
-                <label class="cursore" for="checkbox"><span id="footerSpan">I promise to answer myself without help from
-                        anyone</span></label>
+                <label class="cursore" for="checkbox"><span>I promise to answer myself without help from
+                        anyone</span>
+                </label>
             </div>
-            <button class="cursore" id="proceed" type="submit">PROCEED</button>
+            <button class="cursore" type="submit">PROCEED</button>
         </form>
     </footer>
 </body>
-
 </html>

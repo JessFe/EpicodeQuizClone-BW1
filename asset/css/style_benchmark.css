@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Outfit:wght@400;700&display=swap');
+
+body {
+    height: 100vh;
+    background-color: #0c113b;
+    background-image:
+        linear-gradient(125deg,
+        #0c113b 45%,
+        #431D5Bbb 50%, #431D5Bee 52%, #4a1a62ee 56%,
+        #692a7aee 60%, #572272 65%, #471a62 69%, #471D5B 70%,
+        #692a7aee 75%, #572272 78%, #471a62 83%, #431D5B 84%,
+        #0c113b 92%);        
+
+        width: 700px;
+    margin: 2rem auto;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+}
+
+header img {
+    width: 8rem;
+}
+
+#timer-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#timer-container span {
+    margin-right: 2rem;
+}
+
+#timer-text {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+}
+
+#question {
+    color: white;
+    font-size: 2.4rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+}
+
+input[type="radio"]:checked+label {
+    background-image: linear-gradient(#D20094, #900080);
+    padding: 1em 0;
+}
+
+.radio {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    box-shadow: -0.5px -1.5px 5px;
+}
+
+#answer-list {
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.answer-group {
+    display: flex;
+    justify-content: center;
+}
+
+.answer-group label {
+    flex: 1 1 45%;
+    margin: 0.7rem 1rem;
+    padding: 1rem 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+.nextButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 0.5em 2em;
+    margin: 1rem 18rem;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 0.3em;
+    box-shadow: 0 0 4px;
+    cursor: pointer;
+}
+
+.nextButton:hover {
+    background-color: #B5018B;
+}
+
+.countAnswers {
+    display: block;
+    margin-top: 10px;
+    font-size: 1em;
+    color: white;
+    margin-top: 4rem;
+    letter-spacing: 0.2rem;
+    text-align: center;
+}
+
+
+/* /// RISULTATI /// */
+
+/* Stile per il cerchio dei risultati*/
+#results-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#details-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#results-screen h1 {
+    color: white;
+    font-size: 2.8rem;
+    font-weight: bold;
+}
+
+#results-screen h2 {
+    color: white;
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+/* qui mettiamo li stili per il grafico e i contenuti scritti*/
+
+.winH,
+.loseH {
+    fill: white;
+    font-size: 0.8rem;
+}
+
+.cursore {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    width: 200px;
+    height: 60px;
+    border-radius: 0%;
+    background-color: transparent;
+    box-shadow: 0 0 5px rgba(0, 255, 255);
+    margin-top: 3em;
+}
+
+.cursore:hover {
+    background-color: #33FFFF;
+    box-shadow: 0 0 35px #00FFFF;
+    color: black;
+    transition: 1200ms;
+}
+
+.winP,
+.loseP {
+    fill: #33FFFF;
+    font-size: 0.6rem;
+    font-weight: bold;
+}
+
+.winP {
+    fill: #33FFFF;
+}
+
+.loseP {
+    fill: #D20094;
+}
+
+.secondP,
+.thirdP {
+    fill: white;
+    font-size: 0.6rem;
+}
+
+.thirdP {
+    font-size: 0.45rem;
+}
+
+.correctH,
+.incorrectH {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 2.5rem;
+}
+
+.incorrectP,
+.correctP {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.incorrectP2,
+.correctP2 {
+    color: white;
+    font-size: 1.1rem;
+}
+
+/* #correc-circle,
+#incorrect-circle {
+    z-index: 1;
+} */
+
+/* #tooltip {
+    background-color: #00FFFF;
+    z-index: 1;
+} */

@@ -98,7 +98,7 @@ const questions = [
         incorrect_answers: ["Python", "C", "Jakarta"],
     },
 ];
-// document.addEventListener('DOMContentLoaded', (event) => {
+// aspetto il caricamento del DOM per far partire lo script 
 document.addEventListener('DOMContentLoaded', (event) => {
     let questionNumber = 0;
     let score = 0;
@@ -106,9 +106,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const questionEl = document.getElementById("question");
     const answerListEl = document.getElementById("answer-list");
     const timerEl = document.getElementById("timer");
-    // const nextButtonEl = document.getElementById("next-button");
-    // Funzione per avviare il timer
 
+    // Funzione per avviare il timer
     // Imposta il dashoffset iniziale a pieno, per poi diminuirlo
     function startTimer() {
         let timeLeft = 60;
@@ -119,16 +118,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
         timerCircleEl.style.strokeDasharray = circumference;
         timerCircleEl.style.strokeDashoffset = circumference; // Inizia con il cerchio pieno
 
+        // Aggiungi il testo "SECONDS" sopra al contatore
+        const secondsTextEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        secondsTextEl.setAttribute("x", "50%");
+        secondsTextEl.setAttribute("y", "35%");
+        secondsTextEl.setAttribute("text-anchor", "middle");
+        secondsTextEl.setAttribute("fill", "#fff");
+        secondsTextEl.setAttribute("font-size", "10");
+        secondsTextEl.textContent = "SECONDS";
+        timerCircleEl.parentNode.insertBefore(secondsTextEl, timerCircleEl);
+
+        // Aggiungi il testo "REMAINING" sotto al contatore
+        const remainingTextEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        remainingTextEl.setAttribute("x", "50%");
+        remainingTextEl.setAttribute("y", "75%");
+        remainingTextEl.setAttribute("text-anchor", "middle");
+        remainingTextEl.setAttribute("fill", "#fff");
+        remainingTextEl.setAttribute("font-size", "10");
+        remainingTextEl.textContent = "REMAINING";
+        timerCircleEl.parentNode.insertBefore(remainingTextEl, timerCircleEl.nextSibling);
         timerTextEl.innerText = timeLeft;
 
         timer = setInterval(() => {
             timeLeft--;
             timerTextEl.innerText = timeLeft;
 
-            // Calcola il nuovo offset
-            let dashoffset = ((timeLeft / totalDuration) * circumference);
+            // Calcolo offset circonferenza
+            let dashoffset = circumference + ((timeLeft / totalDuration) * circumference);
             timerCircleEl.style.strokeDashoffset = dashoffset.toFixed(2);
 
+            // se il timer arriva a 0 resetta il timer e vai alla prossima domanda
             if (timeLeft <= 0) {
                 clearInterval(timer);
                 goToNextQuestion();
@@ -177,30 +196,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 label.textContent = answer;
                 label.className = 'radio';
 
-                // inputR.addEventListener('change', () => {
-                //     selectAnswer(answer);
-                //     setTimeout(() => {
-                //         goToNextQuestion();
-                //     }, 1000); // Ritardo di un secondo (1000 millisecondi)
-                // });
-
-
                 nextButton = document.createElement('button');
-                nextButton.className= "nextButton"
-                nextButton.innerText ="Next";
+                nextButton.className = "nextButton"
+                nextButton.innerText = "Next";
                 nextButton.style.display = "none";
 
-                inputR.addEventListener("click",() => {
+                inputR.addEventListener("click", () => {
                     nextButton.style.display = "inline";
-                } )
-                
-
+                })
                 nextButton.addEventListener("click", () => {
                     selectAnswer(answer);
                     goToNextQuestion()
-
                 })
-
                 answerGroup.appendChild(inputR);
                 answerGroup.appendChild(label);
             }
@@ -246,23 +253,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         //punteggio minimo per passare il quiz
         const passingScore = 60;
 
-        // Messaggi da visualizzare
-        let message;
-        if (percentCorrect >= passingScore) {
-            message = `
-                <h2>Congratulations!</h2>
-                <p class='winP'>You passed the exam.</p>
-                <p class='secondP'>We'll send you the certificate in a few minutes.<br/>
-                Check your email (including promotions/spam folder).</p>
-            `;
-        } else {
-            message = `
-                <h2>Oh no!</h2>
-                <p class='loseP'>You didn't pass the exam.</p>
-                <p class='secondP'>Try again, champion!</p>
-            `;
-        }
-
         // calcolo circonferenze per i risultati
         const radius = 90;
         const circumference = 2 * Math.PI * radius;
@@ -285,10 +275,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <p class='correctP2'>${score}/${totalQuestions} questions</p>
                 </div>
                 <svg width="300" height="300" viewBox="0 0 200 200">
-                    <circle r="90" cx="100" cy="100" fill="transparent" stroke="#d20094" stroke-width="20"
+                    <circle id="correct-circle" r="90" cx="100" cy="100" fill="transparent" stroke="#d20094" stroke-width="20"
                         stroke-dasharray="${circumference}" stroke-dashoffset="0"
                         transform="rotate(-90 100 100)" />
-                    <circle r="90" cx="100" cy="100" fill="transparent" stroke="#00ffff" stroke-width="20"
+                    <circle id="incorrect-circle" r="90" cx="100" cy="100" fill="transparent" stroke="#00ffff" stroke-width="20"
                         stroke-dasharray="${circumference}" stroke-dashoffset="${circumference - correctOffset}"
                         transform="rotate(-90 100 100)" />
                     <text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" font-size="16px" fill="#fff">
@@ -312,23 +302,67 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 </div>
             </div>
             <form action="./rating.html">
-                <button class="cursore" id="proceed" type="submit">PROCEED</button>
+                <button class="cursore" id="proceed" type="submit">RATE US</button>
             </form>
 
     `;
-        console.log(correctOffset);
-        console.log(incorrectOffset);
-    }
+        //     let tooltip = document.getElementById('tooltip');
+        //     if (!tooltip) {
+        //         tooltip = document.createElement('div');
+        //         tooltip.id = 'tooltip';
+        //         tooltip.style.position = 'absolute';
+        //         tooltip.style.display = 'none';
+        //         tooltip.style.backgroundColor = 'white';
+        //         tooltip.style.border = '1px solid black';
+        //         tooltip.style.borderRadius = '5px';
+        //         tooltip.style.padding = '5px';
+        //         tooltip.style.pointerEvents = 'none';
+        //         document.body.appendChild(tooltip);
+        //     }
+        //     function showTooltip(event, text) {
+        //         tooltip.style.left = `${event.clientX + 15}px`;
+        //         tooltip.style.top = `${event.clientY + 15}px`;
+        //         tooltip.textContent = text;
+        //         tooltip.style.display = 'block';
+        //     }
+        //     const correctCircle = document.getElementById('correct-circle');
+        //     const incorrectCircle = document.getElementById('incorrect-circle');
+        //     if (correctCircle && incorrectCircle) {
+        //         correctCircle.addEventListener('mouseover', (event) => {
+        //             showTooltip(event, `${percentCorrect.toFixed(1)}% Correct`);
+        //         });
 
-    // Funzione per riavviare il quiz (da implementare)
-    // function restartQuiz() {
-    //     // Reimposta lo stato del quiz e mostra il contenitore del quiz
-    //     questionNumber = 0;
-    //     score = 0;
-    //     document.getElementById('quiz-container').style.display = 'block';
-    //     resultsScreen.style.display = 'none';
-    //     // renderQuestion();
-    // }
-    // Inizia il quiz
+        //         incorrectCircle.addEventListener('mouseover', (event) => {
+        //             showTooltip(event, `${percentIncorrect.toFixed(1)}% Incorrect`);
+        //         });
+
+        //         correctCircle.addEventListener('mousemove', (evt) => {
+        //             showTooltip(evt, `${percentCorrect.toFixed(1)}% Correct`);
+        //         });
+
+        //         incorrectCircle.addEventListener('mousemove', (evt) => {
+        //             showTooltip(evt, `${percentIncorrect.toFixed(1)}% Incorrect`);
+        //         });
+
+        //         // evento per il mouseout sul grafico
+        //         correctCircle.addEventListener('mouseout', () => {
+        //             tooltip.style.display = 'none';
+        //         });
+
+        //         incorrectCircle.addEventListener('mouseout', () => {
+        //             tooltip.style.display = 'none';
+        //         });
+        //     }
+    }
+    // Inizia a rendirizzare domande e risposte
     renderQuestion();
 });
+// Funzione per riavviare il quiz (da implementare)
+// function restartQuiz() {
+//     // Reimposta lo stato del quiz e mostra il contenitore del quiz
+//     questionNumber = 0;
+//     score = 0;
+//     document.getElementById('quiz-container').style.display = 'block';
+//     resultsScreen.style.display = 'none';
+//     // renderQuestion();
+// }
