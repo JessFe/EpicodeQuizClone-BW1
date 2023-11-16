@@ -98,87 +98,72 @@ const questions = [
         incorrect_answers: ["Python", "C", "Jakarta"],
     },
 ];
-
 function createTimerSVG() {
     const timerContainer = document.getElementById("timer-container");
     if (timerContainer) {
         timerContainer.innerHTML = `
-            <svg id="timer-svg" width="100" height="100">
-                <circle id="timer-circle" r="45" cx="50" cy="50" fill="transparent"
-                        stroke="#0FF" stroke-width="10"
-                        stroke-dasharray="282.743" stroke-dashoffset="0"
-                        transform="rotate(-90 50 50)">
-                </circle>
-                <text id="timer-text" x="50%" y="50%" alignment-baseline="middle"
-                    text-anchor="middle" font-size="20" fill="#fff">60</text>
-            </svg>
-        `;
+        <svg id="timer-svg" width="100" height="100">
+        <circle id="timer-circle" r="45" cx="50" cy="50" fill="transparent"
+                stroke="#0FF" stroke-width="10"
+                stroke-dasharray="282.743" stroke-dashoffset="0"
+                transform="rotate(-90 50 50)">
+        </circle>
+        <text id="timer-text" x="50%" y="50%" alignment-baseline="middle"
+            text-anchor="middle" font-size="20" fill="#fff">60</text>
+        <text x="50%" y="35%" text-anchor="middle" fill="#fff" font-size="10">SECONDS</text>
+        <text x="50%" y="75%" text-anchor="middle" fill="#fff" font-size="10">REMAINING</text>
+    </svg>
+`;
     }
 }
-
 // aspetto il caricamento del DOM per far partire lo script 
 document.addEventListener('DOMContentLoaded', (event) => {
     createTimerSVG();
     let questionNumber = 0;
     let score = 0;
     let timer;
+    let selectedAnswer = null;
     const questionEl = document.getElementById("question");
     const answerListEl = document.getElementById("answer-list");
     const timerEl = document.getElementById("timer");
+    let timeLeft = 60;
+    const totalDuration = timeLeft;
+    const timerTextEl = document.getElementById('timer-text');
+    const timerCircleEl = document.getElementById('timer-circle');
+    const circumference = 2 * Math.PI * 45;
 
-    // Funzione per avviare il timer
-    // Imposta il dashoffset iniziale a pieno, per poi diminuirlo
+    // aggiornamento display del timer 
+    function updateTimerDisplay() {
+        timerTextEl.textContent = timeLeft;
+        let dashoffset = circumference + (circumference * timeLeft / totalDuration);
+        timerCircleEl.style.strokeDashoffset = dashoffset.toFixed(2);
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            goToNextQuestion();
+        }
+
+    }
     function startTimer() {
-        let timeLeft = 60;
-        const totalDuration = timeLeft;
-        const timerTextEl = document.getElementById('timer-text');
-        const timerCircleEl = document.getElementById('timer-circle');
-        const circumference = 2 * Math.PI * 45;
-        timerCircleEl.style.strokeDasharray = circumference;
-        timerCircleEl.style.strokeDashoffset = 0; // Inizia con il cerchio pieno
-
-        // Aggiungi il testo "SECONDS" sopra al contatore
-        const secondsTextEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        secondsTextEl.setAttribute("x", "50%");
-        secondsTextEl.setAttribute("y", "35%");
-        secondsTextEl.setAttribute("text-anchor", "middle");
-        secondsTextEl.setAttribute("fill", "#fff");
-        secondsTextEl.setAttribute("font-size", "10");
-        secondsTextEl.textContent = "SECONDS";
-        timerCircleEl.parentNode.insertBefore(secondsTextEl, timerCircleEl);
-
-        // Aggiungi il testo "REMAINING" sotto al contatore
-        const remainingTextEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        remainingTextEl.setAttribute("x", "50%");
-        remainingTextEl.setAttribute("y", "75%");
-        remainingTextEl.setAttribute("text-anchor", "middle");
-        remainingTextEl.setAttribute("fill", "#fff");
-        remainingTextEl.setAttribute("font-size", "10");
-        remainingTextEl.textContent = "REMAINING";
-        timerCircleEl.parentNode.insertBefore(remainingTextEl, timerCircleEl.nextSibling);
-        timerTextEl.innerText = timeLeft;
-
+        timeLeft = 60; // Resetta il tempo ogni volta che inizia una nuova domanda
+        updateTimerDisplay();
         timer = setInterval(() => {
             timeLeft--;
-            timerTextEl.innerText = timeLeft;
-
-            // Calcolo offset circonferenza
-            let dashoffset = circumference + ((timeLeft / totalDuration) * circumference);
-            timerCircleEl.style.strokeDashoffset = dashoffset.toFixed(2);
-
-            // se il timer arriva a 0 resetta il timer e vai alla prossima domanda
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                goToNextQuestion();
-            }
+            updateTimerDisplay();
         }, 1000);
     }
+    // Event listener per la pressione del tasto "F"
+    document.addEventListener('keydown', (event) => {
+        if ((event.key === 'f' || event.key === 'F') && timeLeft > 20) {
+            timeLeft -= 20;
+        } else if (timeLeft <= 20) {
+            timeLeft = 0;
+        }
+        updateTimerDisplay();
+    });
 
     // Funzione per mostrare la domanda
     function renderQuestion() {
-
-        questionAnswered = false;
-
         if (questionNumber >= questions.length) {
             endQuiz();
             return;
@@ -222,15 +207,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 nextButton.style.display = "none";
 
                 inputR.addEventListener("click", () => {
-
-                    selectAnswer(answer);
+                    selectedAnswer = answer; // Aggiorna la risposta selezionata                    
                     nextButton.style.display = "inline";
                 })
                 nextButton.addEventListener("click", () => {
+                    if (selectedAnswer === questions[questionNumber].correct_answer) {
+                        score++;
+                        console.log("score:", score);
+                    }
 
-
-                    goToNextQuestion()
-                })
+                    highlightSelectedAnswer(selectedAnswer);
+                    goToNextQuestion();
+                });
                 answerGroup.appendChild(inputR);
                 answerGroup.appendChild(label);
             }
@@ -243,27 +231,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         countAnswers.appendChild(totalQuestionsText);
         answerListEl.appendChild(nextButton)
         answerListEl.appendChild(countAnswers);
-    }
-
-    // Funzione per gestire la selezione delle risposte
-
-
-
-
-    function selectAnswer(answer) {
-        console.log("selectAnswer:", answer);
-        console.log("correctanswer:", questions[questionNumber].correct_answer);
-
-        if (!questionAnswered) {
-            questionAnswered = true;
-
-            if (answer === questions[questionNumber].correct_answer) {
-                score++;
-                console.log("score:", score);
-            }
-
-            highlightSelectedAnswer(answer);
-        }
     }
 
     // Funzione per evidenziare la risposta selezionata
@@ -343,53 +310,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             </form>
 
     `;
-        //     let tooltip = document.getElementById('tooltip');
-        //     if (!tooltip) {
-        //         tooltip = document.createElement('div');
-        //         tooltip.id = 'tooltip';
-        //         tooltip.style.position = 'absolute';
-        //         tooltip.style.display = 'none';
-        //         tooltip.style.backgroundColor = 'white';
-        //         tooltip.style.border = '1px solid black';
-        //         tooltip.style.borderRadius = '5px';
-        //         tooltip.style.padding = '5px';
-        //         tooltip.style.pointerEvents = 'none';
-        //         document.body.appendChild(tooltip);
-        //     }
-        //     function showTooltip(event, text) {
-        //         tooltip.style.left = `${event.clientX + 15}px`;
-        //         tooltip.style.top = `${event.clientY + 15}px`;
-        //         tooltip.textContent = text;
-        //         tooltip.style.display = 'block';
-        //     }
-        //     const correctCircle = document.getElementById('correct-circle');
-        //     const incorrectCircle = document.getElementById('incorrect-circle');
-        //     if (correctCircle && incorrectCircle) {
-        //         correctCircle.addEventListener('mouseover', (event) => {
-        //             showTooltip(event, `${percentCorrect.toFixed(1)}% Correct`);
-        //         });
 
-        //         incorrectCircle.addEventListener('mouseover', (event) => {
-        //             showTooltip(event, `${percentIncorrect.toFixed(1)}% Incorrect`);
-        //         });
-
-        //         correctCircle.addEventListener('mousemove', (evt) => {
-        //             showTooltip(evt, `${percentCorrect.toFixed(1)}% Correct`);
-        //         });
-
-        //         incorrectCircle.addEventListener('mousemove', (evt) => {
-        //             showTooltip(evt, `${percentIncorrect.toFixed(1)}% Incorrect`);
-        //         });
-
-        //         // evento per il mouseout sul grafico
-        //         correctCircle.addEventListener('mouseout', () => {
-        //             tooltip.style.display = 'none';
-        //         });
-
-        //         incorrectCircle.addEventListener('mouseout', () => {
-        //             tooltip.style.display = 'none';
-        //         });
-        //     }
     }
     // Inizia a rendirizzare domande e risposte
     renderQuestion();
@@ -402,4 +323,53 @@ document.addEventListener('DOMContentLoaded', (event) => {
 //     document.getElementById('quiz-container').style.display = 'block';
 //     resultsScreen.style.display = 'none';
 //     // renderQuestion();
-// }
+// } 
+
+
+//     let tooltip = document.getElementById('tooltip');
+//     if (!tooltip) {
+//         tooltip = document.createElement('div');
+//         tooltip.id = 'tooltip';
+//         tooltip.style.position = 'absolute';
+//         tooltip.style.display = 'none';
+//         tooltip.style.backgroundColor = 'white';
+//         tooltip.style.border = '1px solid black';
+//         tooltip.style.borderRadius = '5px';
+//         tooltip.style.padding = '5px';
+//         tooltip.style.pointerEvents = 'none';
+//         document.body.appendChild(tooltip);
+//     }
+//     function showTooltip(event, text) {
+//         tooltip.style.left = `${event.clientX + 15}px`;
+//         tooltip.style.top = `${event.clientY + 15}px`;
+//         tooltip.textContent = text;
+//         tooltip.style.display = 'block';
+//     }
+//     const correctCircle = document.getElementById('correct-circle');
+//     const incorrectCircle = document.getElementById('incorrect-circle');
+//     if (correctCircle && incorrectCircle) {
+//         correctCircle.addEventListener('mouseover', (event) => {
+//             showTooltip(event, `${percentCorrect.toFixed(1)}% Correct`);
+//         });
+
+//         incorrectCircle.addEventListener('mouseover', (event) => {
+//             showTooltip(event, `${percentIncorrect.toFixed(1)}% Incorrect`);
+//         });
+
+//         correctCircle.addEventListener('mousemove', (evt) => {
+//             showTooltip(evt, `${percentCorrect.toFixed(1)}% Correct`);
+//         });
+
+//         incorrectCircle.addEventListener('mousemove', (evt) => {
+//             showTooltip(evt, `${percentIncorrect.toFixed(1)}% Incorrect`);
+//         });
+
+//         // evento per il mouseout sul grafico
+//         correctCircle.addEventListener('mouseout', () => {
+//             tooltip.style.display = 'none';
+//         });
+
+//         incorrectCircle.addEventListener('mouseout', () => {
+//             tooltip.style.display = 'none';
+//         });
+//     }
