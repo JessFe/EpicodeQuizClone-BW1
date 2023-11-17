@@ -19,6 +19,14 @@ document.addEventListener("DOMContentLoaded", function () {
         ratingContainer.appendChild(star);
     }
 
+    function resetStars() {
+        for (let i = 1; i <= totalStars; i++) {
+            const star = ratingContainer.querySelector(`[data-rating-value="${i}"]`);
+            star.src = "./asset/img/star_dark.svg"; // Imposta tutte le stelle allo stato iniziale
+        }
+        selectedRating = 0; // Resetta il rating selezionato a 0
+    }
+
     function handleMouseOver(event) {
         const hoveredStar = event.target;
         const hoverValue = hoveredStar.dataset.ratingValue;
@@ -63,6 +71,20 @@ document.addEventListener("DOMContentLoaded", function () {
         // rating in console log
         console.log("Rating selected:", selectedRating);
     }
+
+    let takeData = document.getElementById('data');
+    let myForm = document.getElementById('form');
+
+    takeData.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Previene l'invio del form e il ricaricamento della pagina
+            var inputData = takeData.value;
+            console.log("Commento:", inputData); // Stampa il commento in console
+            console.log("Rating selected:", selectedRating); // Stampa il rating selezionato in console
+            resetStars(); // Resetta le stelle
+            takeData.value = ''; // Pulisce il campo di input dopo l'invio
+        }
+    });
 });
 
 
