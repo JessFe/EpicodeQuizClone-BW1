@@ -103,33 +103,34 @@ function createTimerSVG() {
     if (timerContainer) {
         timerContainer.innerHTML = `
         <svg id="timer-svg" width="100" height="100">
-        <circle id="timer-circle" r="45" cx="50" cy="50" fill="transparent"
+            <circle id="timer-circle" r="45" cx="50" cy="50" fill="transparent"
                 stroke="#0FF" stroke-width="10"
                 stroke-dasharray="282.743" stroke-dashoffset="0"
                 transform="rotate(-90 50 50)">
-        </circle>
-        <text id="timer-text" x="50%" y="50%" alignment-baseline="middle"
-            text-anchor="middle" font-size="20" fill="#fff">60</text>
-        <text x="50%" y="35%" text-anchor="middle" fill="#fff" font-size="10">SECONDS</text>
-        <text x="50%" y="75%" text-anchor="middle" fill="#fff" font-size="10">REMAINING</text>
-    </svg>
-`;
+            </circle>
+            <text id="timer-text" x="50%" y="50%" alignment-baseline="middle"
+                text-anchor="middle" font-size="20" fill="#fff">60</text>
+            <text x="50%" y="35%" text-anchor="middle" fill="#fff" font-size="10">SECONDS</text>
+            <text x="50%" y="75%" text-anchor="middle" fill="#fff" font-size="10">REMAINING</text>
+        </svg>
+        `;
     }
 }
+
 // aspetto il caricamento del DOM per far partire lo script 
 document.addEventListener('DOMContentLoaded', (event) => {
     createTimerSVG();
     let questionNumber = 0;
     let score = 0;
     let timer;
+    let timeLeft = 60;
     let selectedAnswer = null;
+    const totalDuration = timeLeft;
+
     const questionEl = document.getElementById("question");
     const answerListEl = document.getElementById("answer-list");
     const timerEl = document.getElementById("timer");
-    let timeLeft = 60;
-    const totalDuration = timeLeft;
     const timerTextEl = document.getElementById('timer-text');
-    const timerCircleEl = document.getElementById('timer-circle');
     const circumference = 2 * Math.PI * 45;
 
     // aggiornamento display del timer 
@@ -137,29 +138,48 @@ document.addEventListener('DOMContentLoaded', (event) => {
         timerTextEl.textContent = timeLeft;
         let dashoffset = circumference + (circumference * timeLeft / totalDuration);
         timerCircleEl.style.strokeDashoffset = dashoffset.toFixed(2);
-
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            goToNextQuestion();
-        }
-
     }
+
+    const timerCircleEl = document.getElementById('timer-circle');
+    const colors = ['#00FFFF', '#4c00ff', '#D20094']; // blu violetto rosa 
+    let currentColorIndex = 0;
+
+    // Funzione per cambiare colore
+    function changeColor() {
+        timerCircleEl.setAttribute('stroke', colors[currentColorIndex]);
+        currentColorIndex = (currentColorIndex + 1) % colors.length;
+    }
+
     function startTimer() {
-        timeLeft = 60; // Resetta il tempo ogni volta che inizia una nuova domanda
+        timeLeft = 60; // così si resetta il tempo ogni volta che inizia una domanda
+        currentColorIndex = 0;
+        // richiamo funzione per aggiornare display del timer
         updateTimerDisplay();
+        // Imposta ogni volta il colore iniziale
+        changeColor();
+        // Inizia il timer
         timer = setInterval(() => {
             timeLeft--;
             updateTimerDisplay();
+            if (timeLeft % (60 / colors.length) === 0) { // ogni 20 sec cambia colore(con il push di un nuovo colore calcola il nuono tempo per cambiare il colore)
+                changeColor();
+            }
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                goToNextQuestion();
+            }
         }, 1000);
     }
     // Event listener per la pressione del tasto "F"
     document.addEventListener('keydown', (event) => {
         if ((event.key === 'f' || event.key === 'F') && timeLeft > 20) {
             timeLeft -= 20;
+            changeColor;
         } else if (timeLeft <= 20) {
             timeLeft = 0;
         }
         updateTimerDisplay();
+        changeColor();
     });
 
     // Funzione per mostrare la domanda
@@ -213,7 +233,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 nextButton.addEventListener("click", () => {
                     if (selectedAnswer === questions[questionNumber].correct_answer) {
                         score++;
-                        console.log("score:", score);
+                        // console.log("score:", score);
                     }
 
                     highlightSelectedAnswer(selectedAnswer);
@@ -269,7 +289,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const resultsScreen = document.getElementById('results-screen');
         resultsScreen.style.display = 'flex';
         resultsScreen.innerHTML = `
-        
             <h1>Results</h1>
             <h2>The summary of your answers:</h2>
             <div id="details-container" class="details-container">
@@ -278,14 +297,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <p class='correctP'>${percentCorrect.toFixed(1)}%</p>
                     <p class='correctP2'>${score}/${totalQuestions} questions</p>
                 </div>
-                <svg width="300" height="300" viewBox="0 0 200 200">
+                <svg id="mycircle" width="300" height="300" viewBox="0 0 200 200">
                     <circle id="correct-circle" r="90" cx="100" cy="100" fill="transparent" stroke="#d20094" stroke-width="20"
                         stroke-dasharray="${circumference}" stroke-dashoffset="0"
                         transform="rotate(-90 100 100)" />
                     <circle id="incorrect-circle" r="90" cx="100" cy="100" fill="transparent" stroke="#00ffff" stroke-width="20"
                         stroke-dasharray="${circumference}" stroke-dashoffset="${circumference - correctOffset}"
                         transform="rotate(-90 100 100)" />
-                    <text x="50%" y="45%" alignment-baseline="middle" text-anchor="middle" font-size="16px" fill="#fff">
+                    <text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" font-size="16px" fill="#fff">
                         ${percentCorrect >= passingScore ?
                 `<tspan class="winH" x="50%" dy="-1.2em">Congratulations!</tspan>
                         <tspan class="winP" x="50%" dy="1.2em">You passed the exam.</tspan>
@@ -293,9 +312,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         <tspan class="secondP" x="50%" dy="1.2em">in a few minutes.</tspan>
                         <tspan class="thirdP" x="50%" dy="1.2em">Check your email (including promotions /</tspan>
                         <tspan class="thirdP" x="50%" dy="1.2em"> spam folder)</tspan> ` :
-                `<tspan class="loseH" x="50%" dy="-0.6em">Oh no!</tspan>
+                `<tspan class="loseH" x="50%" dy="-1.5em">Oh no!</tspan>
                         <tspan class="loseP" x="50%" dy="1.5em">You didn't pass the exam.</tspan>
-                        <tspan class="secondP" x="50%" dy="1.8em">Try again, champion!</tspan>`
+                        <tspan class="secondP" x="50%" dy="1.5em">Try again, champion!</tspan>`
             }
                     </text>
                 </svg>
@@ -308,13 +327,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
             <form action="./rating.html">
                 <button class="cursore" id="proceed" type="submit">RATE US</button>
             </form>
-
     `;
+        // Crea il tooltip
+        const tooltip = document.createElement('div');
+        tooltip.innerHTML = `<p id="quiz-tooltip">${percentCorrect && percentIncorrect}</p>`;
+        document.body.appendChild(tooltip.firstChild);
+
+        const tooltipElement = document.getElementById('quiz-tooltip');
+
+        // Aggiungi event listeners ai cerchi
+        document.getElementById('mycircle').addEventListener('mousemove', (event) => {
+            tooltipElement.style.display = 'block';
+            tooltipElement.style.left = `${event.pageX + 10}px`; // 10 pixel a destra del mouse
+            tooltipElement.style.top = `${event.pageY + 10}px`; // 10 pixel sotto il mouse
+            tooltipElement.textContent = 'Percentuale Corretta:' + percentCorrect.toFixed(1) + '%' + 'Percentuale incorretta: ' + percentIncorrect.toFixed(1) + '%';
+        });
+
+        // Nascondi il tooltip quando il mouse lascia i cerchi
+        const circles = document.querySelectorAll('#mycircle');
+        circles.forEach(circle => {
+            circle.addEventListener('mouseleave', () => {
+                tooltipElement.style.display = 'none';
+            });
+        });
 
     }
     // Inizia a rendirizzare domande e risposte
     renderQuestion();
 });
+
 // Funzione per riavviare il quiz (da implementare)
 // function restartQuiz() {
 //     // Reimposta lo stato del quiz e mostra il contenitore del quiz
