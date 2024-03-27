@@ -9,4 +9,7 @@ It is designed to simulate the real environment of the Epicode weekly tests, pro
 ![VSCode](https://img.shields.io/badge/VSCode-282C34?logo=visualstudiocode&logoColor=007ACC)
 
 ## Preview
-
+<details>
+<summary>Project's galley: click here</summary>
+<img src="/preview/01.png" width="350"> <img src="/preview/02.png" width="350"> <img src="/preview/03.png" width="350"> <img src="/preview/04.png" width="350"> <img src="/preview/05.png" width="350">
+</details>
